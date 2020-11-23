@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CrmallTeste.Api.Configurations;
+using CrmallTeste.IOC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,27 +27,28 @@ namespace Crmall.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddSingleton(Configuration);
+            AutoMapperSetup.AddAutoMapperSetup(services);
+            SwaggerSetup.AddSwaggerSetup(services);
+            DependencyInjectionSetup.AddDependencyInjectionSetup(services, Configuration);
+            ApiSetup.AddApiSetup(services, Configuration);
+
+
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSwaggerSetup();
+            app.UseMvcConfiguration();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
         }
     }
 }

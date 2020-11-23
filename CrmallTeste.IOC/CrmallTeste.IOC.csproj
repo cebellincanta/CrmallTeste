@@ -5,11 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="FluentValidation" Version="9.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.10" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.6" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Crmall.AppService\CrmallTeste.AppService.csproj" />
     <ProjectReference Include="..\Crmall.Infra\CrmallTeste.Infra.csproj" />
     <ProjectReference Include="..\CrmallTeste.Domain\CrmallTeste.Domain.csproj" />
   </ItemGroup>
